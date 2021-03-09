@@ -3,7 +3,7 @@
       :finished="finished"
       finished-text="没有更多了"
   >
-    <van-cell v-for="item in arr" :key="item" :title="item"/>
+    <van-cell v-for="item in arr" :key="item" :title="item" @click="getSuggestProduct(item)"/>
   </van-list>
 </template>
 
@@ -14,6 +14,11 @@ export default {
   data() {
     return {
       finished: true
+    }
+  },
+  methods: {
+    getSuggestProduct(item) {
+      this.$emit("getSuggestProduct",item)
     }
   }
 }

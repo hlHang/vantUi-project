@@ -6,7 +6,7 @@
         <van-icon name="delete"/>
       </div>
       <div class="down">
-        <van-tag v-for="(item, index) in historyKeywordList"
+        <van-tag @click="tagClick(item)" v-for="(item, index) in historyKeywordList"
                  :key="index"
                  round
                  type="primary">{{ item }}
@@ -21,6 +21,7 @@
       </div>
       <div class="down">
         <van-tag
+            @click="tagClick(item.keyword)"
             v-for="(item, index) in hotKeywordList"
             :key="index"
             round
@@ -42,7 +43,11 @@ export default {
   },
   created() {
   },
-  methods: {}
+  methods: {
+    tagClick(item) {
+      this.$emit('tagClick',item)
+    }
+  }
 }
 </script>
 

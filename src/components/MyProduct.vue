@@ -5,7 +5,7 @@
       <van-dropdown-item title="价格" v-model="priceVal" :options="priceArr" @change="priceChange"/>
       <van-dropdown-item title="分类" v-model="categoryVal" :options="filterCategory" @change="categoryChange"/>
     </van-dropdown-menu>
-    <van-empty v-if="ifEmpty" image="search" description="你搜索的产品不存在"/>
+    <van-empty v-if="goodsList.length === 0" image="search" description="你搜索的产品不存在"/>
     <product v-else
              :goodsList="goodsList"
     />
@@ -28,8 +28,6 @@ export default {
         {text: '价格由高到低', value: "desc"},
         {text: '价格由低到高', value: 'asc'}
       ],
-      // 判断是否有产品列表
-      ifEmpty: false
     }
   },
   components: {product},

@@ -12,8 +12,12 @@
         v-if="blockShow===1"
         :history-keyword-list="historyKeywordList"
         :hotKeywordList="hotKeywordList"
+        @tagClick="tagClick"
     />
-    <PromptList v-else-if="blockShow === 2" :arr="listArr"/>
+    <PromptList
+        v-else-if="blockShow === 2"
+        :arr="listArr"
+        @getSuggestProduct="getSuggestProduct"/>
     <MyProduct v-else
                :filterCategory="filterCategory"
                :goodsList="goodsList"
@@ -126,6 +130,18 @@ export default {
               this.listArr = res.data
             }
           })
+    },
+    // 点击标签搜索
+    tagClick(val) {
+      console.log(val)
+      this.iptVal = val
+      this.onSearch()
+    },
+    // 点击建议搜索
+    getSuggestProduct(val) {
+      console.log(val)
+      this.iptVal = val
+      this.onSearch()
     }
   }
 }
