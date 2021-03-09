@@ -6,14 +6,20 @@
         disabled
         background="#fffff"
         placeholder="请输入搜索关键词"
+        @click="goToSearchInterface"
     />
 
     <van-swipe class="my-swipe" :autoplay="3000" indicator-color="darkred">
       <van-swipe-item v-for="item in banner" :key="item.id">
-         <img :src="item.image_url" width="100%" style="display: block;"  alt="">
+        <img :src="item.image_url" width="100%" style="display: block;" alt="">
       </van-swipe-item>
     </van-swipe>
+
+    <transition name="van-slide-right">
+      <router-view></router-view>
+    </transition>
   </div>
+
 </template>
 
 <script>
@@ -47,7 +53,27 @@ export default {
           .catch(err => {
             console.log(err)
           })
+    },
+    goToSearchInterface() {
+      this.$router.push('/home/search')
     }
   }
 }
 </script>
+
+<style lang="less" scoped>
+/*
+.slide-enter, .slide-leave-to {
+  right: -100%;
+}
+
+.slide-enter-active, .slide-leave-active {
+  transition: right 1s linear;
+}
+
+.slide-enter-to, .slide-leave {
+  right: 0;
+}
+*/
+
+</style>
