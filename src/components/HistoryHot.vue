@@ -6,14 +6,12 @@
         <van-icon name="delete"/>
       </div>
       <div class="down">
-        <van-tag   round type="primary" >标签</van-tag>
-        <van-tag   round type="primary" >标签</van-tag>
-        <van-tag   round type="primary" >标签</van-tag>
-        <van-tag   round type="primary">标签</van-tag>
-        <van-tag   round type="primary">标签</van-tag>
-        <van-tag   round type="primary">标签</van-tag>
-        <van-tag   round type="primary">标签</van-tag>
-        <van-tag   round type="primary">标签</van-tag>
+        <van-tag v-for="(item, index) in historyKeywordList"
+                 :key="index"
+                 round
+                 type="primary">{{ item }}
+        </van-tag>
+
       </div>
     </div>
 
@@ -22,40 +20,29 @@
         <h4>热门搜索</h4>
       </div>
       <div class="down">
-        <van-tag round type="primary">标签</van-tag>
-        <van-tag round type="primary">标签</van-tag>
-        <van-tag round type="primary">标签</van-tag>
-        <van-tag round type="primary">标签</van-tag>
-        <van-tag round type="primary">标签</van-tag>
-        <van-tag round type="primary">标签</van-tag>
-        <van-tag round type="primary">标签</van-tag>
-        <van-tag round type="primary">标签</van-tag>
+        <van-tag
+            v-for="(item, index) in hotKeywordList"
+            :key="index"
+            round
+            :type="item.is_hot===1 ? 'danger' : 'primary'">{{ item.keyword }}
+        </van-tag>
+        <!--   三元运算符     -->
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import {GetSearchInterfaceData} from "@/request/api";
 
 export default {
   name: "HistoryHot",
+  props: ['historyKeywordList', 'hotKeywordList'],
   data() {
-    return {
-
-    }
+    return {}
   },
   created() {
-    this.GetAllSearchInterfaceData()
   },
-  methods: {
-  GetAllSearchInterfaceData() {
-    GetSearchInterfaceData()
-    .then(result => {
-      console.log(result)
-    })
-  }
-  }
+  methods: {}
 }
 </script>
 
