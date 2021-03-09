@@ -10,6 +10,9 @@ export const  GetSearchInterfaceData = () => request.get('/search/index')
 // get请求的params需要结构，而post不用
 export const  GetSearchData = (params) => request.get('/goods/list',{params})
 
+// 获取实时搜索数据
+export const  GetRealTimeSearchData = (params) => request.get('/search/helper',{params})
+
 // export const  GetSearchData = (params) => request.post('/goods/list',params)
 
 

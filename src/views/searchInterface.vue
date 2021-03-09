@@ -5,6 +5,7 @@
         show-action
         :placeholder="iptPlaceholder"
         @search="onSearch"
+        @input="onInput"
         @cancel="onCancel"
     />
     <HistoryHot
@@ -12,6 +13,7 @@
         :history-keyword-list="historyKeywordList"
         :hotKeywordList="hotKeywordList"
     />
+    <PromptList v-else-if="blockShow === 2" :arr="listArr"/>
     <MyProduct v-else
                :filterCategory="filterCategory"
                :goodsList="goodsList"
@@ -23,12 +25,13 @@
 </template>
 
 <script>
-import {GetSearchData, GetSearchInterfaceData} from "@/request/api";
+import {GetSearchData, GetSearchInterfaceData, GetRealTimeSearchData} from "@/request/api";
 import HistoryHot from "@/components/HistoryHot";
 import MyProduct from "@/components/MyProduct";
+import PromptList from "@/components/PromptList";
 
 export default {
-  components: {HistoryHot, MyProduct},
+  components: {HistoryHot, MyProduct, PromptList},
   name: "searchInterface",
   data() {
     return {
@@ -50,32 +53,37 @@ export default {
       // 分类id,id就是默认的排序方式
       categoryId: 0,
       // 排序方式
-      sort: "id"
+      sort: "id",
+      // PromptList组件的数组
+      listArr: []
     }
   },
   created() {
-    this.GetAllSearchInterfaceData()
+    this.getAllSearchInterfaceData()
   },
 
   methods: {
+    // 子传父 分类实现
     categoryChange(val) {
       // 调用onSearch方法
       this.categoryId = val
       this.onSearch()
     },
+    // 子传父 价格顺序
     priceChange(val) {
       this.order = val
       console.log(this.order)
       this.sort = 'price'
       this.onSearch()
     },
+    // 搜索方法实现
     onSearch() {
       let _this = this
       GetSearchData({
         keyword: this.iptVal,
         categoryId: this.categoryId,
         sort: this.sort,
-        order:this.order,
+        order: this.order,
         page: 1,
         size: 20
       }).then(res => {
@@ -90,12 +98,12 @@ export default {
         }
       })
     },
-
     // 取消按钮的点击事件
     onCancel() {
       this.$router.go(-1)
     },
-    GetAllSearchInterfaceData() {
+    // 获取所有搜索页界面数据
+    getAllSearchInterfaceData() {
       GetSearchInterfaceData()
           .then(result => {
             console.log(result)
@@ -104,6 +112,18 @@ export default {
               this.iptPlaceholder = defaultKeyword.keyword
               this.historyKeywordList = historyKeywordList
               this.hotKeywordList = hotKeywordList
+            }
+          })
+    },
+    // 实时搜索
+    onInput() {
+      this.blockShow = 2
+      GetRealTimeSearchData({
+        keyword: this.iptVal
+      })
+          .then(res => {
+            if (res.errno === 0) {
+              this.listArr = res.data
             }
           })
     }

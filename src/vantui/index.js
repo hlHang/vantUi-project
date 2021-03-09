@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import {Button, DropdownItem, DropdownMenu, Empty, Icon, Search, Swipe, SwipeItem, Tag} from 'vant';
+import {Button, Cell, DropdownItem, DropdownMenu, Empty, Icon, List, Search, Swipe, SwipeItem, Tag} from 'vant';
 
 Vue.use(Button)
 Vue.use(Search)
@@ -10,3 +10,5 @@ Vue.use(Tag)
 Vue.use(DropdownMenu)
 Vue.use(DropdownItem)
 Vue.use(Empty)
+Vue.use(List)
+Vue.use(Cell)
