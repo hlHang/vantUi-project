@@ -1,18 +1,39 @@
 <template>
   <div class="popup">
-    弹出层prop
-    <button @click="liveFGn">离场</button>
+    <van-search
+        v-model="iptVal"
+        show-action
+        :placeholder="iptPlaceholder"
+        @search="onSearch"
+        @cancel="onCancel"
+    />
+    <HistoryHot></HistoryHot>
   </div>
 
 </template>
 
 <script>
+import HistoryHot from "@/components/HistoryHot";
 export default {
+  components:{HistoryHot},
   name: "searchInterface",
+  data() {
+    return{
+      iptVal:"",
+      iptPlaceholder:"",
+      // 1.历史记录 热门搜索
+      // 2.代表列表区块
+      // 3.代表产品区块
+      blockShow:1
+    }
+  },
 
   methods: {
-    liveFGn() {
-      this.$router.push('/home')
+    onSearch() {},
+
+    // 取消按钮的点击事件
+    onCancel() {
+      this.$router.go(-1)
     }
   }
 }
@@ -24,6 +45,6 @@ export default {
   height: 100%;
   position: absolute;
   top: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: #efefef;
 }
 </style>

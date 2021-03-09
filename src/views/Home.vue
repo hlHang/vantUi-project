@@ -9,7 +9,7 @@
         @click="goToSearchInterface"
     />
 
-    <van-swipe class="my-swipe" :autoplay="3000" indicator-color="darkred">
+    <van-swipe class="my-swipe"  indicator-color="darkred">
       <van-swipe-item v-for="item in banner" :key="item.id">
         <img :src="item.image_url" width="100%" style="display: block;" alt="">
       </van-swipe-item>
