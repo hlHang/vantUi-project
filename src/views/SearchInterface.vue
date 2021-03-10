@@ -154,5 +154,6 @@ export default {
   position: absolute;
   top: 0;
   background: #efefef;
+  z-index: 99;
 }
 </style>

@@ -1,22 +1,24 @@
 <template>
   <div class="home">
-    <van-search
-        v-model="SearchValue"
-        shape="round"
-        disabled
-        background="#fffff"
-        placeholder="请输入搜索关键词"
-        @click="goToSearchInterface"
-    />
+    <div v-if="$route.path==='/home'">
+      <van-search
+          v-model="SearchValue"
+          shape="round"
+          disabled
+          background="#fffff"
+          placeholder="请输入搜索关键词"
+          @click="goToSearchInterface"
+      />
 
-    <van-swipe class="my-swipe"  indicator-color="darkred">
-      <van-swipe-item v-for="item in banner" :key="item.id">
-        <img :src="item.image_url" width="100%" style="display: block;" alt="">
-      </van-swipe-item>
-    </van-swipe>
+      <van-swipe class="my-swipe" indicator-color="darkred">
+        <van-swipe-item v-for="item in banner" :key="item.id">
+          <img :src="item.image_url" width="100%" style="display: block;" alt="">
+        </van-swipe-item>
+      </van-swipe>
+    </div>
 
     <transition name="van-slide-right">
-      <router-view></router-view>
+      <router-view v-if="$route.path==='/home/search'"></router-view>
     </transition>
   </div>
 

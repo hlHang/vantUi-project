@@ -24,30 +24,35 @@ const routes = [
         children: [
             {
                 path: 'search',
-                name: 'searchInterface',
-                component: () => import(/* webpackChunkName: "about" */ '@/views/SearchInterface')
-            }
+                name: 'SearchInterface',
+                component: () => import(/* webpackChunkName: "SearchInterface" */ '@/views/SearchInterface')
+            },
         ]
     },
     {
         path: '/topic',
         name: 'Topic',
-        component: () => import(/* webpackChunkName: "about" */ '@/views/Topic')
+        component: () => import(/* webpackChunkName: "Topic" */ '@/views/Topic')
     },
     {
         path: '/category',
         name: 'Category',
-        component: () => import(/* webpackChunkName: "about" */ '@/views/Category')
+        component: () => import(/* webpackChunkName: "Category" */ '@/views/Category')
     },
     {
         path: '/cart',
         name: 'Cart',
-        component: () => import(/* webpackChunkName: "about" */ '@/views/Cart')
+        component: () => import(/* webpackChunkName: "Cart" */ '@/views/Cart')
     },
     {
         path: '/user',
         name: 'User',
-        component: () => import(/* webpackChunkName: "about" */ '@/views/User')
+        component: () => import(/* webpackChunkName: "User" */ '@/views/User')
+    },
+    {
+        path: '/productdetail',
+        name: 'ProductDetail',
+        component: () => import(/* webpackChunkName: "ProductDetail" */ '@/views/ProductDetail')
     },
 
 
