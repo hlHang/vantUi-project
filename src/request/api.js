@@ -13,6 +13,9 @@ export const  GetSearchData = (params) => request.get('/goods/list',{params})
 // 获取实时搜索数据
 export const  GetRealTimeSearchData = (params) => request.get('/search/helper',{params})
 
+// 清楚历史记录数据
+export const  CleanHistoryData = () => request.post('/search/clearhistory')
+
 // export const  GetSearchData = (params) => request.post('/goods/list',params)
 
 

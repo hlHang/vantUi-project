@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="history">
+    <div class="history" v-if="ifShowHistory">
       <div class="top">
         <h4>历史记录</h4>
-        <van-icon name="delete"/>
+        <van-icon name="delete" @click="ClearHistory"/>
       </div>
       <div class="down">
         <van-tag @click="tagClick(item)" v-for="(item, index) in historyKeywordList"
@@ -34,19 +34,35 @@
 </template>
 
 <script>
+import {CleanHistoryData} from "@/request/api";
 
 export default {
   name: "HistoryHot",
   props: ['historyKeywordList', 'hotKeywordList'],
   data() {
-    return {}
+    return {
+      ifShowHistory:true
+    }
   },
   created() {
   },
   methods: {
     tagClick(item) {
-      this.$emit('tagClick',item)
-    }
+      this.$emit('tagClick', item)
+    },
+    ClearHistory() {
+      CleanHistoryData()
+          .then(res => {
+            console.log(res)
+            if (res.errno === 0) {
+              this.$toast.success("删除成功")
+              setTimeout(() =>{
+                this.ifShowHistory =false
+              },1000)
+
+            }
+          })
+    },
   }
 }
 </script>
