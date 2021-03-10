@@ -1,9 +1,18 @@
 <template>
   <div id="app">
     <router-view/>
+    <MyTabbar/>
   </div>
 </template>
 
+<script>
+import MyTabbar from "@/components/MyTabbar";
+
+export default {
+  components: {MyTabbar}
+}
+
+</script>
 <style lang="less">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

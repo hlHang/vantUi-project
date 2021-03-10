@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Home from '@/views/Home.vue'
 
 Vue.use(VueRouter)
 
@@ -17,11 +17,31 @@ const routes = [
             {
                 path: 'search',
                 name: 'searchInterface',
-                component: () => import(/* webpackChunkName: "about" */ '../views/searchInterface')
+                component: () => import(/* webpackChunkName: "about" */ '@/views/SearchInterface')
             }
-
         ]
     },
+    {
+        path: 'topic',
+        name: 'Topic',
+        component: () => import(/* webpackChunkName: "about" */ '@/views/Topic')
+    },
+    {
+        path: 'category',
+        name: 'Category',
+        component: () => import(/* webpackChunkName: "about" */ '@/views/Category')
+    },
+    {
+        path: 'cart',
+        name: 'Cart',
+        component: () => import(/* webpackChunkName: "about" */ '@/views/Cart')
+    },
+    {
+        path: 'user',
+        name: 'User',
+        component: () => import(/* webpackChunkName: "about" */ '@/views/User')
+    },
+
 
 ]
 
