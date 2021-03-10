@@ -4,6 +4,14 @@ import Home from '@/views/Home.vue'
 
 Vue.use(VueRouter)
 
+// 解决Vue-Router升级导致的Uncaught(in promise) navigation guard问题
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location, onResolve, onReject) {
+    if (onResolve || onReject) return originalPush.call(this, location, onResolve, onReject)
+    return originalPush.call(this, location).catch(err => err)
+}
+
+
 const routes = [
     {
         path: '/',
@@ -22,22 +30,22 @@ const routes = [
         ]
     },
     {
-        path: 'topic',
+        path: '/topic',
         name: 'Topic',
         component: () => import(/* webpackChunkName: "about" */ '@/views/Topic')
     },
     {
-        path: 'category',
+        path: '/category',
         name: 'Category',
         component: () => import(/* webpackChunkName: "about" */ '@/views/Category')
     },
     {
-        path: 'cart',
+        path: '/cart',
         name: 'Cart',
         component: () => import(/* webpackChunkName: "about" */ '@/views/Cart')
     },
     {
-        path: 'user',
+        path: '/user',
         name: 'User',
         component: () => import(/* webpackChunkName: "about" */ '@/views/User')
     },
@@ -46,9 +54,34 @@ const routes = [
 ]
 
 const router = new VueRouter({
-    // mode: 'history',
+    mode: 'history',
     base: process.env.BASE_URL,
     routes
 })
 
+// 路由拦截
+// to是即将进入的路由
+// from代表即将离开的路由
+// next(),每一个导航至少搭配一个next
+router.beforeEach((to, from, next) => {
+    // 获取token
+    let token = localStorage.getItem('token')
+    // 想进入购物车界面必须有token
+    if (to.path === '/cart') {
+        if (token) {
+            next()  // 这个next只针对cart
+        } else {
+            Vue.prototype.$toast.fail('请先登录')
+            // 定时器
+            setTimeout(() => {
+                next("/user")
+            }, 1000)
+        }
+        return
+    }
+    // 此next适配所有路由
+    next()
+})
+
 export default router
+

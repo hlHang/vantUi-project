@@ -12,8 +12,31 @@
 export default {
   name: "MyTabbar",
   data() {
-    return {
-      active: 0
+    return {}
+  },
+  mounted() {
+    console.log(this.$route.path)
+  },
+  computed: {
+    active: {
+      // eslint-disable-next-line vue/return-in-computed-property
+      get() {
+        switch (this.$route.path) {
+          case '/home':
+            return 0
+          case '/topic':
+            return 1
+          case '/category':
+            return 2
+          case '/cart':
+            return 3
+          case '/user':
+            return 4
+          default:
+            break;
+        }
+      },
+      set() {}
     }
   }
 }
