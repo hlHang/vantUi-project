@@ -4,7 +4,7 @@ import {
     Cell, Col,
     DropdownItem,
     DropdownMenu,
-    Empty, Field, Form,
+    Empty, Field, Form, Grid, GridItem,
     Icon,
     List, Row,
     Search,
@@ -31,5 +31,7 @@ Vue.use(Col)
 Vue.use(Row)
 Vue.use(Form)
 Vue.use(Field)
+Vue.use(Grid)
+Vue.use(GridItem)
 Vue.use(Toast)
 

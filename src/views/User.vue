@@ -9,6 +9,14 @@
         <van-icon name="arrow"/>
       </van-col>
     </van-row>
+
+    <van-grid :column-num="3" square>
+      <van-grid-item icon="photo-o" text="文字" @click="iconPrompt"/>
+      <van-grid-item icon="photo-o" text="文字"/>
+      <van-grid-item icon="photo-o" text="文字"/>
+      <van-grid-item icon="photo-o" text="文字"/>
+    </van-grid>
+
     <div class="login_model" v-if="showModel">
       <section @click="closeModel"></section>
       <van-form @submit="onSubmit">
@@ -92,6 +100,9 @@ export default {
     },
     closeModel() {
       this.showModel = false
+    },
+    iconPrompt() {
+      this.$toast.fail('该功能暂未开放')
     }
   }
 }
