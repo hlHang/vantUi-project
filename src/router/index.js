@@ -20,6 +20,9 @@ const routes = [
     {
         path: '/home',
         name: 'Home',
+        meta:{
+            ifShowTabbar: true
+        },
         component: Home,
         children: [
             {
@@ -32,21 +35,33 @@ const routes = [
     {
         path: '/topic',
         name: 'Topic',
+        meta:{
+            ifShowTabbar: true
+        },
         component: () => import(/* webpackChunkName: "Topic" */ '@/views/Topic')
     },
     {
         path: '/category',
         name: 'Category',
+        meta:{
+            ifShowTabbar: true
+        },
         component: () => import(/* webpackChunkName: "Category" */ '@/views/Category')
     },
     {
         path: '/cart',
         name: 'Cart',
+        meta:{
+            ifShowTabbar: true
+        },
         component: () => import(/* webpackChunkName: "Cart" */ '@/views/Cart')
     },
     {
         path: '/user',
         name: 'User',
+        meta:{
+            ifShowTabbar: true
+        },
         component: () => import(/* webpackChunkName: "User" */ '@/views/User')
     },
     {
