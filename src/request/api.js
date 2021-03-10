@@ -16,6 +16,8 @@ export const  GetRealTimeSearchData = (params) => request.get('/search/helper',{
 // 清楚历史记录数据
 export const  CleanHistoryData = () => request.post('/search/clearhistory')
 
+export const  GoLogin = (params) => request.post('/auth/loginByWeb',params)
+
 // export const  GetSearchData = (params) => request.post('/goods/list',params)
 
 
