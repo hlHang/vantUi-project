@@ -44,14 +44,15 @@
         :sku="sku"
         :goods="goods"
         :hide-stock="sku.hide_stock"
+        ref="sku"
     />
-    <MyGoodsAction/>
+    <MyGoodsAction @addToCart="addToCart" :badge="badge"/>
   </div>
 </template>
 
 <script>
 
-import {GetProductDetailData, GetRelatedGoodsData} from "@/request/api";
+import {GetProductDetailData, GetRelatedGoodsData, AddToCart, GetCartCountsData} from "@/request/api";
 import Tips from "@/components/Tips";
 import product from "@/components/product";
 import MyGoodsAction from "@/components/MyGoodsAction";
@@ -75,23 +76,24 @@ export default {
       // Sku中产品信息
       goods: {
         picture: "",
-
       },
       sku: {
         hide_stock: false,
         tree: [],
         stock_num: "",
         price: ""
-
-
       },
       //Sku显示
-      show: false
+      show: false,
+      productList: [],
+      // 购物车数量
+      badge: 0
     }
   },
   created() {
     this.GetOneProductDetailData()
     this.GetAllRelatedGoodsData()
+    this.GetAllCartCountsData()
   },
   methods: {
     // 获取产品详细信息
@@ -101,13 +103,14 @@ export default {
       })
           .then(res => {
             if (res.errno === 0) {
-              let {gallery, info, attribute, issue} = res.data
+              let {gallery, info, attribute, issue, productList} = res.data
               this.gallery = gallery
               this.info = info
               this.issue = issue
               this.attribute = attribute
               this.goods.picture = info.list_pic_url
               this.sku.stock_num = info.goods_number
+              this.productList = productList
               this.sku.price = info.retail_price.toFixed(2)
               this.$refs.box.innerHTML = info.goods_desc
             }
@@ -120,6 +123,35 @@ export default {
       })
           .then(res => {
             this.goodsList = res.data.goodsList
+          })
+    },
+    // 添加购物车
+    addToCart() {
+      if (this.show) {
+        // 正处于选择状态
+        // this.$toast.success('可以加入购物车了')
+        let num = this.$refs.sku.getSkuData().selectedNum
+        AddToCart({
+          goodsId: this.$route.query.id,
+          productId: this.productList[0].id,
+          number: num
+        }).then(response => {
+          if (response.errno === 0) {
+            this.badge = response.data.cartTotal.goodsCount
+            this.show = false
+          }
+        })
+      } else {
+        this.show = true
+      }
+    },
+    // 获取购物车数量
+    GetAllCartCountsData() {
+      GetCartCountsData()
+          .then(response => {
+            if (response.errno === 0) {
+              this.badge = response.data.cartTotal.goodsCount
+            }
           })
     }
   }

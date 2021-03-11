@@ -9,6 +9,11 @@ const instance = axios.create({
 
 // 请求拦截
 instance.interceptors.request.use(config => {
+    // config可携带token
+    let token = localStorage.getItem('token')
+    if (token) {
+        config.headers['X-Nideshop-Token'] = token
+    }
     return config;
 }, error => {
     return Promise.reject(error);

@@ -22,8 +22,14 @@ export const CleanHistoryData = () => request.post('/search/clearhistory')
 // 获取相关产品
 export const GetRelatedGoodsData = (params) => request.get('/goods/related', {params})
 
+// 获取相关产品
+export const GetCartCountsData = () => request.get('/cart/goodscount')
+
 // 登录
 export const GoLogin = (params) => request.post('/auth/loginByWeb', params)
+
+// 添加至购物车
+export const AddToCart = (params) => request.post('/cart/add', params)
 
 // export const  GetSearchData = (params) => request.post('/goods/list',params)
 
