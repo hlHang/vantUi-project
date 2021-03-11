@@ -1,17 +1,15 @@
 import Vue from 'vue';
 import {
-    Button,
-    Cell, Col,
+    Button, Card,
+    Cell, Checkbox, CheckboxGroup, Col,
     DropdownItem,
     DropdownMenu,
     Empty, Field, Form, GoodsAction, GoodsActionButton, GoodsActionIcon, Grid, GridItem,
     Icon,
     List, Row,
-    Search, Sku,
+    Search, Sku, Stepper, SubmitBar,
     Swipe, SwipeItem,
-    Tabbar, TabbarItem,
-    Tag,
-    Toast
+    Tabbar, TabbarItem, Tag, Toast
 } from 'vant';
 
 Vue.use(Button)
@@ -37,5 +35,10 @@ Vue.use(GoodsAction)
 Vue.use(GoodsActionButton)
 Vue.use(GoodsActionIcon)
 Vue.use(Sku)
+Vue.use(Checkbox)
+Vue.use(CheckboxGroup)
+Vue.use(Card)
+Vue.use(Stepper)
+Vue.use(SubmitBar)
 Vue.use(Toast)
 
