@@ -20,6 +20,7 @@ const routes = [
     {
         path: '/home',
         name: 'Home',
+        // 元数据
         meta:{
             ifShowTabbar: true
         },

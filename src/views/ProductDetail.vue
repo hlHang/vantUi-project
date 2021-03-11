@@ -21,6 +21,11 @@
         </li>
       </ul>
     </div>
+    <!--  把html标签渲染到标签中
+          1. 使用v-html
+          2. ref - 操作dom
+          -->
+    <div class="box" ref="box"></div>
   </div>
 </template>
 
@@ -56,6 +61,8 @@ export default {
               this.gallery = gallery
               this.info = info
               this.attribute = attribute
+
+              this.$refs.box.innerHTML = info.goods_desc
             }
           })
     }
@@ -112,6 +119,7 @@ export default {
       line-height: .4rem;
       display: flex;
       justify-content: space-between;
+
       span {
         width: 22%;
         text-align: right;
@@ -123,5 +131,12 @@ export default {
       }
     }
   }
+}
+
+/deep/.box {
+      img {
+        width: 100%;
+        display: block;
+      }
 }
 </style>
