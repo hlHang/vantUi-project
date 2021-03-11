@@ -130,17 +130,23 @@ export default {
       if (this.show) {
         // 正处于选择状态
         // this.$toast.success('可以加入购物车了')
-        let num = this.$refs.sku.getSkuData().selectedNum
-        AddToCart({
-          goodsId: this.$route.query.id,
-          productId: this.productList[0].id,
-          number: num
-        }).then(response => {
-          if (response.errno === 0) {
-            this.badge = response.data.cartTotal.goodsCount
-            this.show = false
-          }
-        })
+        let token = localStorage.getItem('token')
+        if (token) {
+          let num = this.$refs.sku.getSkuData().selectedNum
+          AddToCart({
+            goodsId: this.$route.query.id,
+            productId: this.productList[0].id,
+            number: num
+          }).then(response => {
+            if (response.errno === 0) {
+              this.badge = response.data.cartTotal.goodsCount
+              this.show = false
+            }
+          })
+        } else {
+          this.$toast.fail('请先登录')
+          this.$router.push('/user')
+        }
       } else {
         this.show = true
       }

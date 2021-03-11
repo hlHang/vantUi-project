@@ -15,6 +15,13 @@
           <img :src="item.image_url" width="100%" style="display: block;" alt="">
         </van-swipe-item>
       </van-swipe>
+
+      <van-grid :column-num="5">
+        <van-grid-item v-for="item in channel" :key="item.id" :icon="item.icon_url" :text="item.name"/>
+      </van-grid>
+
+      <my-title> 插槽 </my-title>
+
     </div>
 
     <transition name="van-slide-right">
@@ -26,36 +33,39 @@
 
 <script>
 import {GetHomeData} from "@/request/api";
+import MyTitle from "@/components/MyTitle";
 
 export default {
   name: 'Home',
-  components: {},
+  components: {MyTitle},
   data() {
     return {
       SearchValue: "",
-      banner: []
+      // 轮播图
+      banner: [],
+      // 宫格
+      channel: [],
+      components: {MyTitle}
     }
   },
   created() {
     this.getHomePageData()
   },
   methods: {
+    // 获取主页数据
     getHomePageData() {
       GetHomeData()
           .then(response => {
             if (response.errno === 0) {
               console.log(response.data)
               // eslint-disable-next-line no-unused-vars
-              let {banner} = response.data;
+              let {banner, channel} = response.data;
               this.banner = banner
-              console.log(this.banner)
+              this.channel = channel
             }
-
-          })
-          .catch(err => {
-            console.log(err)
           })
     },
+    // 前往搜索页
     goToSearchInterface() {
       this.$router.push('/home/search')
     }
