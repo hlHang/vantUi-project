@@ -74,11 +74,16 @@ export default {
 
       // Sku中产品信息
       goods: {
-        picture: ""
+        picture: "",
+
       },
       sku: {
         hide_stock: false,
-        tree: []
+        tree: [],
+        stock_num: "",
+        price: ""
+
+
       },
       //Sku显示
       show: false
@@ -88,9 +93,6 @@ export default {
     this.GetOneProductDetailData()
     this.GetAllRelatedGoodsData()
   },
-  mounted() {
-    console.log(this.$route)
-  },
   methods: {
     // 获取产品详细信息
     GetOneProductDetailData() {
@@ -99,13 +101,14 @@ export default {
       })
           .then(res => {
             if (res.errno === 0) {
-              console.log(res.data)
               let {gallery, info, attribute, issue} = res.data
               this.gallery = gallery
               this.info = info
               this.issue = issue
               this.attribute = attribute
-
+              this.goods.picture = info.list_pic_url
+              this.sku.stock_num = info.goods_number
+              this.sku.price = info.retail_price.toFixed(2)
               this.$refs.box.innerHTML = info.goods_desc
             }
           })
@@ -257,6 +260,10 @@ export default {
 }
 
 .van-goods-action {
-  z-index: 2007;
+  z-index: 4999;
+}
+
+.van-sku-container {
+  min-height: auto;
 }
 </style>
