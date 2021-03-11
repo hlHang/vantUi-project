@@ -4,10 +4,10 @@ import {
     Cell, Col,
     DropdownItem,
     DropdownMenu,
-    Empty, Field, Form, Grid, GridItem,
+    Empty, Field, Form, GoodsAction, GoodsActionButton, GoodsActionIcon, Grid, GridItem,
     Icon,
     List, Row,
-    Search,
+    Search, Sku,
     Swipe, SwipeItem,
     Tabbar, TabbarItem,
     Tag,
@@ -33,5 +33,9 @@ Vue.use(Form)
 Vue.use(Field)
 Vue.use(Grid)
 Vue.use(GridItem)
+Vue.use(GoodsAction)
+Vue.use(GoodsActionButton)
+Vue.use(GoodsActionIcon)
+Vue.use(Sku)
 Vue.use(Toast)
 

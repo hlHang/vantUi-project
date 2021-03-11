@@ -11,7 +11,7 @@
       <p>{{ info.goods_brief }}</p>
       <div>{{ info.retail_price | filterMoney }}</div>
     </div>
-    <van-cell class="showSku" title="展示弹出层" is-link/>
+    <van-cell @click="show=true" class="showSku" title="展示弹出层" is-link/>
     <div class="attribute">
       <h4>商品参数</h4>
       <ul>
@@ -39,17 +39,26 @@
       <span>大家都在看</span>
     </div>
     <product :goods-list="goodsList"/>
+    <van-sku
+        v-model="show"
+        :sku="sku"
+        :goods="goods"
+        :hide-stock="sku.hide_stock"
+    />
+    <MyGoodsAction/>
   </div>
 </template>
 
 <script>
-import product from "@/components/product";
+
 import {GetProductDetailData, GetRelatedGoodsData} from "@/request/api";
 import Tips from "@/components/Tips";
+import product from "@/components/product";
+import MyGoodsAction from "@/components/MyGoodsAction";
 
 export default {
   name: "ProductDetail",
-  components: {Tips,product},
+  components: {Tips, product, MyGoodsAction},
   data() {
     return {
       // 轮播图
@@ -61,7 +70,18 @@ export default {
       // 常见问题
       issue: [],
       // 相关产品
-      goodsList: []
+      goodsList: [],
+
+      // Sku中产品信息
+      goods: {
+        picture: ""
+      },
+      sku: {
+        hide_stock: false,
+        tree: []
+      },
+      //Sku显示
+      show: false
     }
   },
   created() {
@@ -234,5 +254,9 @@ export default {
       padding-left: .2rem;
     }
   }
+}
+
+.van-goods-action {
+  z-index: 2007;
 }
 </style>
