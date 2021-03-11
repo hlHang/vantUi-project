@@ -19,6 +19,10 @@ export const GetProductDetailData = (params) => request.get('/goods/detail', {pa
 // 清楚历史记录数据
 export const CleanHistoryData = () => request.post('/search/clearhistory')
 
+// 获取相关产品
+export const GetRelatedGoodsData = (params) => request.get('/goods/related', {params})
+
+// 登录
 export const GoLogin = (params) => request.post('/auth/loginByWeb', params)
 
 // export const  GetSearchData = (params) => request.post('/goods/list',params)

@@ -26,30 +26,53 @@
           2. ref - 操作dom
           -->
     <div class="box" ref="box"></div>
+    <div class="title">
+      <span>常见问题</span>
+    </div>
+    <ul class="issue">
+      <li v-for="item in issue" :key="item.id">
+        <h3>{{ item.question }}</h3>
+        <p>{{ item.answer }}</p>
+      </li>
+    </ul>
+    <div class="title">
+      <span>大家都在看</span>
+    </div>
+    <product :goods-list="goodsList"/>
   </div>
 </template>
 
 <script>
-import {GetProductDetailData} from "@/request/api";
+import product from "@/components/product";
+import {GetProductDetailData, GetRelatedGoodsData} from "@/request/api";
 import Tips from "@/components/Tips";
 
 export default {
   name: "ProductDetail",
-  components: {Tips},
+  components: {Tips,product},
   data() {
     return {
+      // 轮播图
       gallery: [],
+      // 产品信息
       info: {},
-      attribute: []
+      // 商品参数
+      attribute: [],
+      // 常见问题
+      issue: [],
+      // 相关产品
+      goodsList: []
     }
   },
   created() {
     this.GetOneProductDetailData()
+    this.GetAllRelatedGoodsData()
   },
   mounted() {
     console.log(this.$route)
   },
   methods: {
+    // 获取产品详细信息
     GetOneProductDetailData() {
       GetProductDetailData({
         id: this.$route.query.id
@@ -57,13 +80,23 @@ export default {
           .then(res => {
             if (res.errno === 0) {
               console.log(res.data)
-              let {gallery, info, attribute} = res.data
+              let {gallery, info, attribute, issue} = res.data
               this.gallery = gallery
               this.info = info
+              this.issue = issue
               this.attribute = attribute
 
               this.$refs.box.innerHTML = info.goods_desc
             }
+          })
+    },
+    // 获取相关产品
+    GetAllRelatedGoodsData() {
+      GetRelatedGoodsData({
+        id: this.$route.query.id
+      })
+          .then(res => {
+            this.goodsList = res.data.goodsList
           })
     }
   }
@@ -133,10 +166,73 @@ export default {
   }
 }
 
-/deep/.box {
-      img {
-        width: 100%;
-        display: block;
+/deep/ .box {
+  img {
+    width: 100%;
+    display: block;
+  }
+}
+
+.title {
+  width: 100%;
+  background-color: #ffffff;
+  height: .5rem;
+  position: relative;
+
+  &::before {
+    content: "";
+    width: 50%;
+    height: 2px;
+    background: #cccccc;
+    position: absolute;
+    top: 50%;
+    margin-top: -1px;
+    left: 50%;
+    margin-left: -25%;
+  }
+
+  span {
+    width: 30%;
+    position: relative;
+    background: #fff;
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+    height: .5rem;
+    line-height: .5rem;
+  }
+}
+
+.issue {
+  padding: 0 4%;
+  background: #fff;
+
+  li {
+    h3 {
+      height: .3rem;
+      line-height: .3rem;
+      padding-left: .2rem;
+      position: relative;
+      font-weight: normal;
+
+      &::before {
+        content: "";
+        width: 4px;
+        height: 4px;
+        background: darkred;
+        display: inline-block;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        margin-top: -2px;
       }
+    }
+
+    p {
+      font-size: .12rem;
+      line-height: .2rem;
+      padding-left: .2rem;
+    }
+  }
 }
 </style>
