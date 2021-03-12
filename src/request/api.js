@@ -34,8 +34,11 @@ export const AddToCart = (params) => request.post('/cart/add', params)
 // 全选状态
 export const GoodsChecked = (params) => request.post('/cart/checked', params)
 
-// 全选状态
+// 步进器
 export const StepNumber = (params) => request.post('/cart/update', params)
+
+// 删除购物车中的商品
+export const DelCartsGoods = (params) => request.post('/cart/delete', params)
 
 // 获取购物车信息
 export const GetCartInfoData = () => request.get('/cart/index')

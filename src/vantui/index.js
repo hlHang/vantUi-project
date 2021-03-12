@@ -8,7 +8,7 @@ import {
     Icon,
     List, Row,
     Search, Sku, Stepper, SubmitBar,
-    Swipe, SwipeItem,
+    Swipe, SwipeCell, SwipeItem,
     Tabbar, TabbarItem, Tag, Toast
 } from 'vant';
 
@@ -40,5 +40,6 @@ Vue.use(CheckboxGroup)
 Vue.use(Card)
 Vue.use(Stepper)
 Vue.use(SubmitBar)
+Vue.use(SwipeCell)
 Vue.use(Toast)
 

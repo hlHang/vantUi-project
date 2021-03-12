@@ -11,12 +11,18 @@
                     v-for="item in cartList"
                     :key="item.id"
                     @click="goodsClick(item)">
-        <van-card
-            :num="item.number"
-            :price="item.retail_price"
-            :title="item.goods_name"
-            :thumb="item.list_pic_url"
-        />
+        <van-swipe-cell>
+          <van-card
+              :num="item.number"
+              :price="item.retail_price"
+              :title="item.goods_name"
+              :thumb="item.list_pic_url"
+          />
+          <template #right>
+            <van-button square text="删除" type="danger" :disabled="isClicked" class="delete-button" @click="delCartsGoodsFn(item.product_id)"/>
+          </template>
+        </van-swipe-cell>
+
         <van-stepper v-show="isClicked"
                      @change="stepChange(item)"
                      v-model="item.number"
@@ -41,7 +47,7 @@
 
 <script>
 import tips from "@/components/Tips";
-import {GetCartInfoData, GoodsChecked, StepNumber} from "@/request/api";
+import {GetCartInfoData, GoodsChecked, StepNumber, DelCartsGoods} from "@/request/api";
 
 export default {
   name: "Cart",
@@ -141,6 +147,14 @@ export default {
           .then(response => {
             this.totalFn(response.data)
           })
+    },
+    // 删除购物车商品
+    delCartsGoodsFn(productId) {
+      DelCartsGoods({
+        productIds: productId.toString()
+      }).then(response => {
+        this.totalFn(response.data)
+      })
     }
   }
 }
@@ -172,5 +186,9 @@ export default {
 
 button {
   vertical-align: middle;
+}
+
+.delete-button {
+  height: 100%;
 }
 </style>
