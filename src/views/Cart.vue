@@ -19,7 +19,8 @@
               :thumb="item.list_pic_url"
           />
           <template #right>
-            <van-button square text="删除" type="danger" :disabled="isClicked" class="delete-button" @click="delCartsGoodsFn(item.product_id)"/>
+            <van-button square text="删除" type="danger" :disabled="isClicked" class="delete-button"
+                        @click="delCartsGoodsFn(item.product_id)"/>
           </template>
         </van-swipe-cell>
 
@@ -96,7 +97,7 @@ export default {
   },
   methods: {
     onSubmit() {
-
+      this.$toast.success('已提交')
     },
     // 获取购物车所有信息
     getAllCartInfo() {
