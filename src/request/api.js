@@ -34,6 +34,9 @@ export const AddToCart = (params) => request.post('/cart/add', params)
 // 全选状态
 export const GoodsChecked = (params) => request.post('/cart/checked', params)
 
+// 全选状态
+export const StepNumber = (params) => request.post('/cart/update', params)
+
 // 获取购物车信息
 export const GetCartInfoData = () => request.get('/cart/index')
 

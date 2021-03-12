@@ -1,8 +1,15 @@
 <template>
   <div>
     <tips/>
-    <van-checkbox-group v-model="result">
-      <van-checkbox class="chx" :name="item.product_id" v-for="item in cartList" :key="item.id"
+    <!--
+      disable=true 禁用状态
+      -->
+    <van-checkbox-group :disabled="isClicked"
+                        v-model="result">
+      <van-checkbox class="chx"
+                    :name="item.product_id"
+                    v-for="item in cartList"
+                    :key="item.id"
                     @click="goodsClick(item)">
         <van-card
             :num="item.number"
@@ -10,14 +17,22 @@
             :title="item.goods_name"
             :thumb="item.list_pic_url"
         />
+        <van-stepper v-show="isClicked"
+                     @change="stepChange(item)"
+                     v-model="item.number"
+                     theme="round"
+                     button-size="22"
+                     disable-input/>
       </van-checkbox>
     </van-checkbox-group>
 
     <van-submit-bar :price="cartTotal.checkedGoodsAmount*100" button-text="提交订单" @submit="onSubmit">
-      <van-checkbox v-model="checkedAll">全选</van-checkbox>
+      <van-checkbox v-model="checkedAll" :disabled="isClicked">全选</van-checkbox>
       <template #tip>
         累计共 <span>{{ cartTotal.checkedGoodsCount }}</span> 件商品，可点击
-        <van-button type="primary" size="mini" @click="onClickEditAddress">编辑</van-button>
+        <van-button :type="isClicked ? 'danger' : 'primary'" size="mini" @click="isClicked =! isClicked">
+          {{ isClicked ? '完成编辑' : '编辑' }}
+        </van-button>
         按钮进行商品数量修改
       </template>
     </van-submit-bar>
@@ -26,7 +41,7 @@
 
 <script>
 import tips from "@/components/Tips";
-import {GetCartInfoData, GoodsChecked} from "@/request/api";
+import {GetCartInfoData, GoodsChecked, StepNumber} from "@/request/api";
 
 export default {
   name: "Cart",
@@ -40,7 +55,9 @@ export default {
       // 商品列表数组
       cartList: [],
       // 购物车总数
-      cartTotal: []
+      cartTotal: [],
+      // 是否显示步进器
+      isClicked: false
     }
   },
   computed: {
@@ -75,9 +92,7 @@ export default {
     onSubmit() {
 
     },
-    onClickEditAddress() {
-      console.log()
-    },
+    // 获取购物车所有信息
     getAllCartInfo() {
       GetCartInfoData()
           .then(response => {
@@ -87,6 +102,7 @@ export default {
             }
           })
     },
+    // 封装传输数据方法
     totalFn(data) {
       let {cartList, cartTotal} = data
       this.cartList = cartList
@@ -100,14 +116,31 @@ export default {
         }
       })
     },
+    // 商品卡片点击状态
     goodsClick(item) {
-      GoodsChecked({
-        // 即将变成选中状态
-        isChecked: item.checked === 1 ? 0 : 1,
-        productIds: item.product_id.toString()
-      }).then(response => {
-        this.totalFn(response.data)
+      if (this.isClicked) {
+        return
+      } else {
+        GoodsChecked({
+          // 即将变成选中状态
+          isChecked: item.checked === 1 ? 0 : 1,
+          productIds: item.product_id.toString()
+        }).then(response => {
+          this.totalFn(response.data)
+        })
+      }
+    },
+    // 商品步进器事件
+    stepChange(item) {
+      StepNumber({
+        number: item.number,
+        goodsId: item.goods_id,
+        id: item.id,
+        productId: item.product_id
       })
+          .then(response => {
+            this.totalFn(response.data)
+          })
     }
   }
 }
@@ -131,6 +164,10 @@ export default {
 .van-submit-bar__tip {
   height: .2rem;
   line-height: .2rem;
+}
+
+.van-stepper {
+  text-align: right;
 }
 
 button {
